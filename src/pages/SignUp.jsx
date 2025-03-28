@@ -8,7 +8,7 @@ const SignUp = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Prevents multiple submissions
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     const name = nameRef.current?.value.trim();
@@ -20,8 +20,10 @@ const SignUp = () => {
       return;
     }
 
+    setLoading(true);
+    setError("Servers are hosted for free, so it may take a few minutes...");
+
     try {
-      setLoading(true);
       const response = await axios.post("https://tripsync-backend-yovp.onrender.com/api/user/signup", {
         name,
         email,
@@ -29,19 +31,18 @@ const SignUp = () => {
       });
 
       if (response.status === 201) {
-        // ✅ Save token & Navigate using window.location.href
         localStorage.setItem("token", response.data.token);
-            nameRef.current.value="";
-            emailRef.current.value="";
-            passwordRef.current.value="";
-            setError("Account is Created now you can login")// ✅ Redirect to login page
+        nameRef.current.value = "";
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+        setError("Account created successfully! You can now login.");
       } else {
         setError(response.data.message || "Signup failed. Please try again.");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+      setError(err.response?.data?.message || "Something went wrong. Please try again later.");
     } finally {
-      setLoading(false); // ✅ Reset loading state
+      setLoading(false);
     }
   };
 
@@ -70,10 +71,17 @@ const SignUp = () => {
           
           <button 
             onClick={handleSubmit} 
-            className="bg-black cursor-pointer text-white rounded-full font-semibold text-center py-3"
+            className="bg-black cursor-pointer text-white rounded-full font-semibold text-center py-3 flex justify-center items-center gap-2"
             disabled={loading} 
           >
-            {loading ? "Please wait..." : "Create an account"}
+            {loading ? (
+              <>
+                <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span>
+                Signing up...
+              </>
+            ) : (
+              "Create an account"
+            )}
           </button>
         </div>
 
@@ -83,7 +91,10 @@ const SignUp = () => {
           <div className="border-t-2 border-t-neutral-200 w-full"></div>
         </div>
 
-        <button onClick={()=>setError("Feature is under development stage use above method")} className="w-full bg-white rounded-full border-neutral-400 border py-2 font-bold mt-4 flex justify-center items-center gap-3">
+        <button 
+          onClick={() => setError("Feature is under development stage, use above method")} 
+          className="w-full bg-white rounded-full border-neutral-400 border py-2 font-bold mt-4 flex justify-center items-center gap-3"
+        >
           <img
             src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-1024.png"
             className="w-8 h-8 object-cover"

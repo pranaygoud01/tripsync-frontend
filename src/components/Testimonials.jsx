@@ -38,7 +38,7 @@ const Testimonials = () => {
 
     return (
         <>
-        <div className='flex justify-center mt-20 w-full'>
+        <div id="testimonials" className='flex justify-center mt-20 w-full'>
             <div className='max-w-[900px] h-[50vh] flex items-center flex-col border-b-2 max-lg:border-b-0 border-b-neutral-200 w-full'
             style={{borderRadius:"100% 0% 50% 50% / 0% 0% 100% 100% "}}>
                 <h1 className='font-semibold text-2xl bg-gradient-to-l from-indigo-500 via-red-500 to-blue-500 text-transparent bg-clip-text'>Testimonials</h1>
