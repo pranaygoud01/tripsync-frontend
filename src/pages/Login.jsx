@@ -14,7 +14,7 @@ const Login = () => {
     if(!email||!password){
       SetError("All fields are required");
     }
-    const response= await axios.post("http://localhost:5000/api/user/login",{
+    const response= await axios.post("https://tripsync-backend-yovp.onrender.com/api/user/login",{
       email,password
     })
    const data=await response.data;

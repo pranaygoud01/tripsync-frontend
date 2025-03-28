@@ -22,7 +22,7 @@ const SignUp = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:5000/api/user/signup", {
+      const response = await axios.post("https://tripsync-backend-yovp.onrender.com/api/user/signup", {
         name,
         email,
         password,

@@ -36,7 +36,7 @@ const TripForm = () => {
     setTripPlan("");
   
     try {
-      const response = await axios.post("http://localhost:5000/generate", formData);
+      const response = await axios.post("https://tripsync-backend-yovp.onrender.com/generate", formData);
       let cleanedTripPlan = response.data.tripPlan
         .replace(/```html|```/g, "") // Remove triple backticks and 'html'
         .trim(); // Remove extra spaces
