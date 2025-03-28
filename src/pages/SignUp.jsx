@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
 import Input from "../components/Input";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import axios from "axios";
 
 const SignUp = () => {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("")
+  const navigatie=useNavigate();
   const [loading, setLoading] = useState(false); // Prevents multiple submissions
 
   const handleSubmit = async () => {
@@ -31,7 +32,7 @@ const SignUp = () => {
       if (response.status === 201) {
         // ✅ Save token & Navigate using window.location.href
         localStorage.setItem("token", response.data.token);
-        window.location.href = "/login"; // ✅ Redirect to login page
+          navigatie("/login") // ✅ Redirect to login page
       } else {
         setError(response.data.message || "Signup failed. Please try again.");
       }
